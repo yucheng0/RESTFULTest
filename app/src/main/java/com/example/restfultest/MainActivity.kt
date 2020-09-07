@@ -32,12 +32,23 @@ class MainActivity : AppCompatActivity() {
         btnRest.setOnClickListener {
             post3rd_rest()
         }
+        checkBox.setOnClickListener{
+            if (checkBox.isChecked == true) {
+                editTextIPAddress.setText("192.168.0.102")
+            }
+            else
+                editTextIPAddress.setText("")
+          println ("I am pressed")
+        }
+
     }
     //=====================================================================================
     fun post3rd_rest() {
         GlobalScope.launch(Dispatchers.Default) {
             delay(1000)            //不加delay 好像不行 , 網路備好時間(min=300ms)
-            val url = "http://192.168.0.102/REST/GetMachineStatus.ashx"
+            val ipaddress = editTextIPAddress.text.toString()
+   //         val url = "http://192.168.0.102/REST/GetMachineStatus.ashx"
+            val url = "http://${ipaddress}/REST/GetMachineStatus.ashx"
             client = OkHttpClient()                            //要一個實例
             // 記憶雙引號前加\
             JSON = MediaType.parse("application/json; charset=utf-8")
